@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Anki</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Блок добавления новой карточки (Поля поменяли местами) -->
+        <div class="add-card-box">
+            <h3>Добавить карточку</h3>
+            <input type="text" id="new-front" placeholder="Слово на русском">
+            <input type="text" id="new-back" placeholder="Перевод на английском">
+            <button onclick="addNewCard()">Добавить ➕</button>
+        </div>
+
+        <!-- Счетчик оставшихся карточек -->
+        <div id="counter">Осталось карточек на сегодня: 0</div>
+
+        <!-- Сама карточка -->
+        <div class="card" id="card" onclick="flipCard()">
+            <p id="card-text">Нажмите «Следующая», чтобы начать</p>
+        </div>
+        
+        <!-- Кнопки управления -->
+        <div class="controls">
+            <button onclick="speakText()" class="btn-audio">🔊 Озвучить</button>
+            <div id="anki-buttons" style="display: none; margin-top: 15px;">
+                <button onclick="handleAnswer(1)" class="btn-bad">Плохо (1)</button>
+                <button onclick="handleAnswer(3)" class="btn-good">Нормально (3)</button>
+                <button onclick="handleAnswer(5)" class="btn-easy">Отлично (5)</button>
+            </div>
+            <button id="btn-next" onclick="showCurrentCard()">Начать / Следующая ➡️</button>
+        </div>
+
+        <!-- Панель управления всеми карточками -->
+        <div class="manager-box">
+            <h3>Все мои карточки</h3>
+            <div id="card-list"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
