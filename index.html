@@ -9,7 +9,7 @@
 <body>
 
     <div class="app-container">
-        <!-- Блок добавления новой карточки (Поля поменяли местами) -->
+        <!-- Блок добавления новой карточки -->
         <div class="add-card-box">
             <h3>Добавить карточку</h3>
             <input type="text" id="new-front" placeholder="Слово на русском">
@@ -38,7 +38,11 @@
 
         <!-- Панель управления всеми карточками -->
         <div class="manager-box">
-            <h3>Все мои карточки</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>Все мои карточки</h3>
+                <!-- НОВАЯ КНОПКА СБРОСА -->
+                <button onclick="resetAllIntervals()" style="background: #e2e8f0; color: #4a5568; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">Сбросить прогресс 🔄</button>
+            </div>
             <div id="card-list"></div>
         </div>
     </div>
