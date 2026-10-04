@@ -1,0 +1,164 @@
+/* Базовые переменные для Светлой темы */
+:root {
+    --bg-color: #f4f6f9;
+    --text-color: #333333;
+    --box-bg: #ffffff;
+    --card-border: #eef2f5;
+    --shadow: rgba(0, 0, 0, 0.08);
+}
+
+/* Автоматическое переключение на Тёмную тему, если она включена на устройстве */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #121212;
+        --text-color: #e0e0e0;
+        --box-bg: #1e1e1e;
+        --card-border: #2d2d2d;
+        --shadow: rgba(0, 0, 0, 0.3);
+    }
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.3s, color 0.3s;
+}
+
+.app-container {
+    text-align: center;
+    width: 90%;
+    max-width: 450px;
+    padding: 20px;
+}
+
+.add-card-box, .manager-box {
+    background: var(--box-bg);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.add-card-box input {
+    width: 85%;
+    padding: 10px;
+    margin: 6px 0;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+#counter {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+/* НАСТРОЙКА 3D ЭФФЕКТА ДЛЯ КАРТОЧКИ */
+.card-perspective {
+    perspective: 1000px; /* Глубина 3D пространства */
+    margin-bottom: 20px;
+}
+
+.card-3d {
+    width: 100%;
+    min-height: 160px;
+    position: relative;
+    transform-style: preserve-3d; /* Позволяет дочерним элементам быть в 3D */
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); /* Плавное вращение */
+    cursor: pointer;
+}
+
+/* Этот класс будет добавляться через JavaScript при клике */
+.card-3d.flipped {
+    transform: rotateY(180deg); /* Поворот на 180 градусов */
+}
+
+.card-side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Прячет заднюю сторону элемента при развороте */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 6px 20px var(--shadow);
+    border: 2px solid var(--card-border);
+    background: var(--box-bg);
+}
+
+.card-front {
+    transform: rotateY(0deg);
+}
+
+.card-back {
+    transform: rotateY(180deg); /* Изначально перевернута в пространстве */
+}
+
+.card-side p {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Кнопки управления */
+.controls button {
+    padding: 12px 18px;
+    font-size: 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-audio { background-color: #6c757d; color: white; }
+#btn-next { background-color: #007bff; color: white; }
+.btn-bad { background-color: #dc3545; color: white; }
+.btn-good { background-color: #ffc107; color: #212529; }
+.btn-easy { background-color: #28a745; color: white; }
+
+/* Элементы управления спойлером списка */
+.manager-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-toggle { background: none; border: none; color: #007bff; font-weight: bold; cursor: pointer; font-size: 14px; }
+.btn-reset { background: #e2e8f0; color: #4a5568; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+
+#card-list {
+    margin-top: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+#card-list.hidden {
+    display: none; /* Скрывает список */
+}
+
+.manager-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--card-border);
+    font-size: 14px;
+}
+
+.manager-text { flex-grow: 1; margin-right: 10px; }
+.btn-edit { background: #e6f0fa; color: #007bff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px; }
+.btn-delete { background: #fde8e8; color: #dc3545; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; }

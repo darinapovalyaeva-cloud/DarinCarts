@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Anki</title>
+    <title>Мой Anki Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,11 +18,20 @@
         </div>
 
         <!-- Счетчик оставшихся карточек -->
-        <div id="counter">Осталось карточек на сегодня: 0</div>
+        <div id="counter">Осталось карточек на данный момент: 0</div>
 
-        <!-- Сама карточка -->
-        <div class="card" id="card" onclick="flipCard()">
-            <p id="card-text">Нажмите «Следующая», чтобы начать</p>
+        <!-- Контейнер для 3D карточки -->
+        <div class="card-perspective">
+            <div class="card-3d" id="card-element" onclick="flipCard()">
+                <!-- Лицевая сторона (Русский) -->
+                <div class="card-side card-front">
+                    <p id="card-text-front">Нажмите «Следующая»</p>
+                </div>
+                <!-- Обратная сторона (Английский) -->
+                <div class="card-side card-back">
+                    <p id="card-text-back">Перевод</p>
+                </div>
+            </div>
         </div>
         
         <!-- Кнопки управления -->
@@ -36,14 +45,14 @@
             <button id="btn-next" onclick="showCurrentCard()">Начать / Следующая ➡️</button>
         </div>
 
-        <!-- Панель управления всеми карточками -->
+        <!-- Сворачиваемая панель управления -->
         <div class="manager-box">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3>Все мои карточки</h3>
-                <!-- НОВАЯ КНОПКА СБРОСА -->
-                <button onclick="resetAllIntervals()" style="background: #e2e8f0; color: #4a5568; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">Сбросить прогресс 🔄</button>
+            <div class="manager-header">
+                <!-- Кнопка-спойлер для списка слов -->
+                <button onclick="toggleManagerList()" id="btn-toggle-list" class="btn-toggle">Показать все карточки (0) 👇</button>
+                <button onclick="resetAllIntervals()" class="btn-reset">Сбросить прогресс 🔄</button>
             </div>
-            <div id="card-list"></div>
+            <div id="card-list" class="hidden"></div>
         </div>
     </div>
 
