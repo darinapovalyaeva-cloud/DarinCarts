@@ -9,12 +9,16 @@
 <body>
 
     <div class="app-container">
-        <!-- Блок добавления новой карточки -->
+        <!-- Сворачиваемый блок добавления новой карточки -->
         <div class="add-card-box">
-            <h3>Добавить карточку</h3>
-            <input type="text" id="new-front" placeholder="Слово на русском">
-            <input type="text" id="new-back" placeholder="Перевод на английском">
-            <button onclick="addNewCard()">Добавить ➕</button>
+            <!-- КНОПКА-СПОЙЛЕР ДЛЯ ФОРМЫ -->
+            <button onclick="toggleAddForm()" id="btn-toggle-form" class="btn-toggle-form">Добавить новые слова 👇</button>
+            
+            <div id="add-form-content" class="hidden-form" style="display: none; margin-top: 15px;">
+                <input type="text" id="new-front" placeholder="Слово на русском">
+                <input type="text" id="new-back" placeholder="Перевод на английском">
+                <button onclick="addNewCard()" style="background-color: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 85%; margin-top: 5px;">Добавить ➕</button>
+            </div>
         </div>
 
         <!-- Счетчик оставшихся карточек -->
@@ -45,10 +49,9 @@
             <button id="btn-next" onclick="showCurrentCard()">Начать / Следующая ➡️</button>
         </div>
 
-        <!-- Сворачиваемая панель управления -->
+        <!-- Сворачиваемая панель управления всеми карточками -->
         <div class="manager-box">
             <div class="manager-header">
-                <!-- Кнопка-спойлер для списка слов -->
                 <button onclick="toggleManagerList()" id="btn-toggle-list" class="btn-toggle">Показать все карточки (0) 👇</button>
                 <button onclick="resetAllIntervals()" class="btn-reset">Сбросить прогресс 🔄</button>
             </div>

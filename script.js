@@ -18,6 +18,10 @@ const counterText = document.getElementById("counter");
 const cardListContainer = document.getElementById("card-list");
 const btnToggleList = document.getElementById("btn-toggle-list");
 
+// Новые элементы для спойлера формы
+const addFormContent = document.getElementById("add-form-content");
+const btnToggleForm = document.getElementById("btn-toggle-form");
+
 function saveToStorage() {
     localStorage.setItem('anki_cards', JSON.stringify(flashcards));
     renderCardList();
@@ -70,7 +74,19 @@ function addNewCard() {
     updateQueue();
 }
 
-// Функция Свернуть/Развернуть список слов (Спойлер)
+// НОВАЯ ФУНКЦИЯ: Свернуть/Развернуть блок добавления слов
+function toggleAddForm() {
+    if (addFormContent.style.display === "none") {
+        addFormContent.style.display = "block";
+        btnToggleForm.innerText = "Скрыть форму добавления ☝️";
+        btnToggleForm.style.color = "#6c757d"; // Меняем цвет текста на нейтральный серый, когда открыто
+    } else {
+        addFormContent.style.display = "none";
+        btnToggleForm.innerText = "Добавить новые слова 👇";
+        btnToggleForm.style.color = "#007bff"; // Синий, когда закрыто
+    }
+}
+
 function toggleManagerList() {
     cardListContainer.classList.toggle("hidden");
     if (cardListContainer.classList.contains("hidden")) {
@@ -100,7 +116,6 @@ function renderCardList() {
     });
 }
 
-// Удаление
 function deleteCard(index) {
     if (confirm(`Вы уверены, что хотите удалить карточку "${flashcards[index].front}"?`)) {
         flashcards.splice(index, 1);
@@ -117,7 +132,6 @@ function deleteCard(index) {
     }
 }
 
-// Редактирование
 function editCard(index) {
     const card = flashcards[index];
     const newFront = prompt("Измените русское слово:", card.front);
@@ -162,11 +176,8 @@ function showCurrentCard() {
 
     currentCard = currentQueue[0];
     isFront = true;
-    
-    // Возвращаем карточку в исходное (не перевернутое) состояние перед показом нового слова
     cardElement.classList.remove("flipped");
     
-    // Небольшая задержка, чтобы текст менялся, пока карточка «спиной» к пользователю
     setTimeout(() => {
         cardTextFront.innerText = currentCard.front;
         cardTextBack.innerText = currentCard.back;
@@ -176,16 +187,39 @@ function showCurrentCard() {
     btnNext.style.display = "inline-block";
 }
 
-// Логика 3D переворота
+function updateButtonLabels() {
+    if (!currentCard) return;
+
+    document.querySelector(".btn-bad").innerText = "Плохо (1 мин)";
+    document.querySelector(".btn-good").innerText = "Нормально (10 мин)";
+    
+    let nextRepetition = currentCard.repetition + 1;
+    let days = 0;
+    
+    if (nextRepetition === 1) {
+        days = 1;
+    } else if (nextRepetition === 2) {
+        days = 6;
+    } else {
+        let currentDays = currentCard.interval / 1440;
+        let simulatedEfactor = currentCard.efactor + (0.1 - (5 - 5) * (0.08 + (5 - 5) * 0.02));
+        if (simulatedEfactor < 1.3) simulatedEfactor = 1.3;
+        days = Math.round(currentDays * simulatedEfactor);
+    }
+    
+    document.querySelector(".btn-easy").innerText = `Отлично (${days} дн.)`;
+}
+
 function flipCard() {
     if (!currentCard) return;
     
     isFront = !isFront;
     if (isFront) {
-        cardElement.classList.remove("flipped"); // Поворот на лицо
+        cardElement.classList.remove("flipped");
         ankiButtons.style.display = "none";
     } else {
-        cardElement.classList.add("flipped");    // Поворот на оборот
+        cardElement.classList.add("flipped");
+        updateButtonLabels();
         ankiButtons.style.display = "block";
         speakText(); 
     }
@@ -234,6 +268,7 @@ function speakText() {
     window.speechSynthesis.speak(utterance);
 }
 
+// Запуск при старте страницы
 updateQueue();
 renderCardList();
 setInterval(updateQueue, 10000);

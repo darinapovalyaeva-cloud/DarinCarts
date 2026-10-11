@@ -162,3 +162,13 @@ body {
 .manager-text { flex-grow: 1; margin-right: 10px; }
 .btn-edit { background: #e6f0fa; color: #007bff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px; }
 .btn-delete { background: #fde8e8; color: #dc3545; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+.btn-toggle-form {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    padding: 5px 0;
+}
